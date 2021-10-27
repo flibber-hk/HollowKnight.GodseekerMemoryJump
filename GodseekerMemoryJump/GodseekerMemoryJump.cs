@@ -8,7 +8,7 @@ using Vasi;
 
 namespace GodseekerMemoryJump
 {
-    public class GodseekerMemoryJump : Mod
+    public class GodseekerMemoryJump : Mod, ITogglableMod
     {
         internal static GodseekerMemoryJump instance;
         
@@ -26,6 +26,10 @@ namespace GodseekerMemoryJump
             Log("Initializing Mod...");
 
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += EnableGodseekerMemoryJump;
+        }
+        public void Unload()
+        {
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= EnableGodseekerMemoryJump;
         }
 
         private void EnableGodseekerMemoryJump(Scene scene, LoadSceneMode lsm)
