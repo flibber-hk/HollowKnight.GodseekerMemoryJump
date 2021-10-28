@@ -11,24 +11,27 @@ namespace GodseekerMemoryJump
     public class GodseekerMemoryJump : Mod, ITogglableMod
     {
         internal static GodseekerMemoryJump instance;
-        
+        public bool ModEnabled = false;
+
         public GodseekerMemoryJump() : base("Godseeker Memory Jump")
         {
             instance = this;
         }
         public override string GetVersion()
         {
-            return "1.0";
+            return "1.1";
         }
 
         public override void Initialize()
         {
             Log("Initializing Mod...");
-
+            
+            ModEnabled = true;
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += EnableGodseekerMemoryJump;
         }
         public void Unload()
         {
+            ModEnabled = false;
             UnityEngine.SceneManagement.SceneManager.sceneLoaded -= EnableGodseekerMemoryJump;
         }
 
@@ -55,7 +58,7 @@ namespace GodseekerMemoryJump
                     FsmState state = fsm.Fsm.GetState("Wastes Cutscene?");
                     state.InsertMethod(0, () =>
                     {
-                        if (HeroController.instance.cState.facingRight)
+                        if (HeroController.instance.cState.facingRight && ModEnabled)
                         {
                             fsm.SendEvent("CUTSCENE");
                         }
